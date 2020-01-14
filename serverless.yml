@@ -1,5 +1,5 @@
-# org: eletype
-# app: eletype
+org: eletype
+app: eletype
 
 service: ${self:custom.stageName}
 
@@ -45,8 +45,6 @@ provider:
         REGION: ${opt:region, self:provider.region}
         STAGE: ${opt:stage, self:provider.stage}
         SERVERLESS_REGION: ${self:provider.region}
-
-        LISTENER_TOPIC: arn:aws:sns:${opt:region, self:provider.region}:#{AWS::AccountId}:${opt:stage, self:provider.stage}-serverless-pro-test-listener
 functions:
     main:
         name: ${self:custom.stageName}-main
@@ -56,12 +54,3 @@ functions:
             - http:
                   path: ${self:custom.event_path}
                   method: GET
-    # listener:
-    #     name: ${self:custom.stageName}-listener
-    #     timeout: 300
-    #     handler: src/listener.handler
-    #     events:
-    #         - sns: ${self:custom.listener-topic}
-    #         - http:
-    #               path: ${self:custom.ping_path}
-    #               method: GET
